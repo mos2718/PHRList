@@ -1,0 +1,61 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>FHIR and DICOMWeb imaging workflow</title>
+		<meta charset="utf-8" />
+		<style>
+			body {
+			  font-family: Arial, sans-serif;
+			}
+		</style>
+	</head>
+	<body >
+
+		
+		<h1>FHIR and DICOMWeb imaging workflow</h1>
+		<ul>
+			<li>1. 開立影像檢查處方 (Ordering)</li>
+			<li>2. 影像檢查排程(Scheduling)</li>
+			<li>3. 儀器造影 (Imaging acquisition)</li>
+			<li>4. 打報告 (Reporting)</li>
+		 </ul>  
+		<h3><a href="Examples.html">範例資料與程式(examples)</a></h3>
+		<h2>1. 開立影像檢查處方 (Post serviceRequest)</h2>
+		<h2>2. 影像檢查排程(Scheduling)</h2>
+		<ul>
+			<li>2.1 取得影像檢查處方 (Get serviceRequest)</li>
+			<li>2.2 預約檢查及報到(Post appointment and encounter)</li>
+			<li>2.3 依據處方及排程資訊，產生工作清單, 注 1
+				(Post or get serviceRequest and encounter. Create DICOM MWL or UPS)</li>
+		 </ul>  
+		 <h5>注 1: 現行 PACS server 及儀器支援 FHIR 及 DICOMWeb 的程度不一，
+			 可能轉換介面架在server 或儀器端。
+			 介面系統因處於server 或儀器端，可能扮演 HTTPServer 或 client 及 DICOM MWL server。
+			 RIS order filler 系統可能修改檢查項目</h5>
+
+
+		<h2>3. 儀器造影 (Imaging acquisition)</h2>
+		<ul>
+			<li>3.1 取得工作清單, 注 2 (Retrieve MWL or Get UPS)</li>
+			<li>3.2 上傳影像(STOW image store)</li>
+			<li>3.3 上傳影像清單, 注 3 (Post imagingStudy)</li>
+			<li>3.4 調閱影像清單，確認儲存完成 (Get imagingStudy)</li>
+		 </ul>  
+		 <h5>注 2:  MWL 及 Get UPS 內容可與 serviceRequest and encounter 對應，
+			 儀器或介面程式可從 MWL, UPS,serviceRequest 取得檢查項目。
+			 </h5>
+		 <h5>注 3: 可從 DICOMWeb server 或 FHIR server 確認影像儲存完成。
+			imagingStudy 也可用於 QA QC。</h5>
+
+		<h2>4. 打報告 (Reporting)</h2>
+		<ul>
+			<li>4.1 查詢要打報告的病人 (Get encountered patient)</li>
+			<li>4.2 調閱病人歷次檢查影像影像清單(Get imagingStudy)</li>
+			<li>4.3 調閱影像(WADO-RS retrieve)</li>
+			<li>4.4 產生影像標記、發現、及報告(Post annotation and finding observation and diagnosticReport)</li>
+		 </ul>  
+		<br>
+		
+		
+	</body>
+</html>
